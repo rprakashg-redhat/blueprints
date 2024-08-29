@@ -8,6 +8,18 @@ name = "microshift"
 version = "4.16"
 
 [[packages]]
+name = "microshift-networking"
+version = "*"
+
+[[packages]]
+name = "microshift-release-info"
+version = "*"
+
+[[packages]]
+name = "microshift-selinux"
+version = "*"
+
+[[packages]]
 name = "microshift-greenboot"
 version = "*"
 
@@ -63,14 +75,88 @@ version = "*"
 name = "jq"
 version = "*"
 
+#########################################
+# Container runtime and tools
+#########################################
+# A container engine used to manage and run containers in a MicroShift environment.
+[[packages]]
+name = "podman"
+version = "*"
+
+# Lightweight container runtimes used by Podman.
+[[packages]]
+name = "crun"
+version = "*"
+
+# A tool for working with container images (copying, signing, inspecting)
+[[packages]]
+name = "skopeo"
+version = "*"
+
+# A tool for building Open Container Initiative (OCI) images.
+[[packages]]
+name = "buildah"
+version = "*"
+
+#########################################
+# Networking tools
+#########################################
+# Required for managing network rules in the Linux kernel.
+[[packages]]
+name = "iptables"
+version = "*"
+
+# Provides a dynamic firewall with support for network zones.
+[[packages]]
+name = "firewalld"
+version = "*"
+
+# Provides DNS and DHCP services required for some MicroShift network configurations.
+[[packages]]
+name = "dnsmasq"
+version = "*"
+
+# Container Network Interface (CNI) plugins required for container networking in MicroShift.
+[[packages]]
+name = "cni-plugins"
+version = "*"
+
+#########################################
+# System Utilities and Dependencies
+#########################################
+#  A time synchronization service, crucial for distributed systems like Kubernetes.
+[[packages]]
+name = "chrony"
+version = "*"
+
+# System logging service to capture logs from MicroShift and other system services. 
+[[packages]]
+name = "rsyslog"
+version = "*"
+
+# Provides essential system utilities.
+[[packages]]
+name = "util-linux"
+version = "*"
+
+# Utilities for working with the ext2/3/4 filesystems
+[[packages]]
+name = "e2fsprogs"
+version = "*"
+
+# Tools for managing Logical Volume Manager (LVM), useful if using LVM storage.
+[[packages]]
+name = "lvm2"
+version = "*"
+
 [customizations.timezone]
 timezone = "US/Pacific"
 
 [customizations.services]
-enabled = ["microshift", "cockpit.socket"]
+enabled = ["microshift", "cockpit.socket", "podman", "chronyd", "rsyslog", "firewalld"]
 
 [customizations.firewall]
-ports = ["8081:tcp", "8089:tcp", "8096:tcp", "8443:tcp", "8480:tcp", "9091:tcp", "9099:tcp"]                # Optional: List of ports to open (e.g., "80/tcp")
+ports = ["8081:tcp", "8089:tcp", "8096:tcp", "8443:tcp", "8480:tcp", "9091:tcp", "9099:tcp"]
 
 [customizations.firewall.services]
 enabled = ["http", "https", "ssh", "cockpit", "kube-apiserver", "kube-nodeport-services", "dhcpv6-client"]
