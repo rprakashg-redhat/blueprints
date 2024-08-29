@@ -1,23 +1,11 @@
 name            = "rhde_with_microshift"
 description     = "Red Hat Device Edge 9.4 with Microshift 4.16"
 version         = "0.0.1"
-
-[customizations.timezone]
-timezone = "US/Pacific"
-
-[customizations.services]
-enabled = ["microshift", "cockpit.socket"]
-
-[customizations.firewall]
-ports = ["8081:tcp", "8089:tcp", "8096:tcp", "8443:tcp", "8480:tcp", "9091:tcp", "9099:tcp"]                # Optional: List of ports to open (e.g., "80/tcp")
-
-[customizations.firewall.services]
-enabled = ["http", "https", "ssh", "cockpit", "kube-apiserver", "kube-nodeport-services", "dhcpv6-client"]
-disabled = ["telnet"]
+distro          = "rhel-9.4"
 
 [[packages]]
 name = "microshift"
-version = "*"
+version = "4.16"
 
 [[packages]]
 name = "microshift-greenboot"
@@ -74,6 +62,19 @@ version = "*"
 [[packages]]
 name = "jq"
 version = "*"
+
+[customizations.timezone]
+timezone = "US/Pacific"
+
+[customizations.services]
+enabled = ["microshift", "cockpit.socket"]
+
+[customizations.firewall]
+ports = ["8081:tcp", "8089:tcp", "8096:tcp", "8443:tcp", "8480:tcp", "9091:tcp", "9099:tcp"]                # Optional: List of ports to open (e.g., "80/tcp")
+
+[customizations.firewall.services]
+enabled = ["http", "https", "ssh", "cockpit", "kube-apiserver", "kube-nodeport-services", "dhcpv6-client"]
+disabled = ["telnet"]
 
 # Customize journald microshift configuration
 [[customizations.files]]
@@ -162,6 +163,8 @@ data = '''
     # log "Error" "This is an error message."
 '''
 
+# Custom Greenboot health checks for core microshift 
+# https://docs.redhat.com/en/documentation/red_hat_build_of_microshift/4.16/html/running_applications/microshift-greenboot-workload-scripts#microshift-greenboot-app-health-check-ex-reqs_microshift-greenboot-workload-scripts
 [[customizations.directories]]
 path = "/etc/greenboot/check/required.d"
 
