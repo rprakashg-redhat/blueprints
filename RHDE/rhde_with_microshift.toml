@@ -1,11 +1,11 @@
 name            = "rhde_with_microshift"
 description     = "Red Hat Device Edge 9.4 with Microshift 4.16"
 version         = "0.0.1"
-distro          = "rhel-9.4"
+distro          = "rhel-94"
 
 [[packages]]
 name = "microshift"
-version = "4.16"
+version = "*"
 
 [[packages]]
 name = "microshift-networking"
@@ -17,108 +17,6 @@ version = "*"
 
 [[packages]]
 name = "microshift-selinux"
-version = "*"
-
-[[packages]]
-name = "microshift-greenboot"
-version = "*"
-
-[[packages]]
-name = "greenboot-default-health-checks"
-version = "*"
-
-[[packages]]
-name = "cockpit"
-version = "*"
-
-[[packages]]
-name = "cockpit-machines"
-version = "*"
-
-[[packages]]
-name = "cockpit-ostree"
-version = "*"
-
-[[packages]]
-name = "cockpit-podman"
-version = "*"
-
-[[packages]]
-name = "cockpit-pcp"
-version = "*"
-
-[[packages]]
-name = "openshift-clients"
-version = "*"
-
-[[packages]]
-name = "git"
-version = "*"
-
-[[packages]]
-name = "iputils"
-version = "*"
-
-[[packages]]
-name = "redhat-release"
-version = "*"
-
-[[packages]]
-name = "wget"
-version = "*"
-
-[[packages]]
-name = "curl"
-version = "*"
-
-[[packages]]
-name = "jq"
-version = "*"
-
-#########################################
-# Container runtime and tools
-#########################################
-# A container engine used to manage and run containers in a MicroShift environment.
-[[packages]]
-name = "podman"
-version = "*"
-
-# Lightweight container runtimes used by Podman.
-[[packages]]
-name = "crun"
-version = "*"
-
-# A tool for working with container images (copying, signing, inspecting)
-[[packages]]
-name = "skopeo"
-version = "*"
-
-# A tool for building Open Container Initiative (OCI) images.
-[[packages]]
-name = "buildah"
-version = "*"
-
-#########################################
-# Networking tools
-#########################################
-# Required for managing network rules in the Linux kernel.
-[[packages]]
-name = "iptables"
-version = "*"
-
-# Provides a dynamic firewall with support for network zones.
-[[packages]]
-name = "firewalld"
-version = "*"
-
-# Provides DNS and DHCP services required for some MicroShift network configurations.
-[[packages]]
-name = "dnsmasq"
-version = "*"
-
-# Container Network Interface (CNI) plugins required for container networking in MicroShift.
-[[packages]]
-name = "cni-plugins"
 version = "*"
 
 #########################################
@@ -148,9 +46,6 @@ version = "*"
 [[packages]]
 name = "lvm2"
 version = "*"
-
-[customizations.timezone]
-timezone = "US/Pacific"
 
 [customizations.services]
 enabled = ["microshift", "cockpit.socket", "podman", "chronyd", "rsyslog", "firewalld"]
@@ -219,11 +114,13 @@ resources:
 - https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 '''
 
+# Custom Greenboot health checks for core microshift 
+# https://docs.redhat.com/en/documentation/red_hat_build_of_microshift/4.16/html/running_applications/microshift-greenboot-workload-scripts#microshift-greenboot-app-health-check-ex-reqs_microshift-greenboot-workload-scripts
 [[customizations.directories]]
-path = "/usr/local/bin"
+path = "/etc/greenboot/check/required.d"
 
 [[customizations.files]]
-path = "/usr/local/bin/greenboot-logger.sh"
+path = "/etc/greenboot/check/required.d/greenboot-logger.sh"
 mode = "0755"
 user = "root"
 group = "root"
@@ -249,11 +146,6 @@ data = '''
     # log "Error" "This is an error message."
 '''
 
-# Custom Greenboot health checks for core microshift 
-# https://docs.redhat.com/en/documentation/red_hat_build_of_microshift/4.16/html/running_applications/microshift-greenboot-workload-scripts#microshift-greenboot-app-health-check-ex-reqs_microshift-greenboot-workload-scripts
-[[customizations.directories]]
-path = "/etc/greenboot/check/required.d"
-
 [[customizations.files]]
 path = "/etc/greenboot/check/required.d/40_microshift_running_check.sh"
 mode = "0755"
@@ -264,7 +156,7 @@ data = '''
 set -e
 
 # Source the logging script
-source /usr/local/bin/greenboot-logger.sh
+source greenboot-logger.sh
 
 SCRIPT_NAME=$(basename "$0")
 SCRIPT_PID=$$

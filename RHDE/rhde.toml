@@ -1,0 +1,60 @@
+name            = "rhde"
+description     = "Red Hat Device Edge 9.4"
+version         = "0.0.1"
+distro          = "rhel-94"
+
+[[packages]]
+name = "podman"
+version = "*"
+
+[[packages]]
+name = "scap-security-guide"
+
+[[packages]]
+name = "openscap-scanner"
+
+[[packages]]
+name = "aide"
+version = "*" 
+
+[[packages]]
+name = "firewalld"
+version = "*"  # Firewall
+
+[[packages]]
+name = "rsyslog"
+version = "*"  # System logging
+
+[[packages]]
+name = "rng-tools"
+version = "*"  # Random number generator tools for entropy
+
+[[packages]]
+name = "chrony"
+version = "*"  # Time synchronization
+
+[[packages]]
+name = "usbguard"
+version = "*"  # USB device control
+
+[[packages]]
+name = "policycoreutils"
+version = "*"  # SELinux policy tools
+
+[[packages]]
+name = "crypto-policies"
+version = "*"  # Crypto policies for system-wide cryptographic configuration
+
+[[services]]
+name = "sshd"
+enabled = true
+
+[[services]]
+name = "rhcd"
+enabled = false  # Red Hat Insights client
+
+[customizations.services]
+enabled = ["sshd", "firewalld"]
+
+[customizations.firewall]
+ports = ["22:tcp", "80:tcp", "443:tcp"]
