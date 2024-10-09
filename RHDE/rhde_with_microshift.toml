@@ -1,6 +1,8 @@
 name            = "rhde_with_microshift"
 description     = "Red Hat Device Edge 9.4 with Microshift 4.16"
-version         = "0.0.1"
+version         = "1.0.0"
+modules = []
+groups = []
 distro          = "rhel-94"
 
 [[packages]]
@@ -61,18 +63,17 @@ disabled = ["telnet"]
 [[customizations.files]]
 path = "/etc/systemd/journald.conf.d/microshift.conf"
 mode = "0755"
-data = '''
+data = """
 [Journal]
 Storage=persistent
 SystemMaxUse=1G
-RuntimeMaxUse=1G
-'''
+RuntimeMaxUse=1G"""
 
 # Customize microshift lvmd.yaml https://github.com/openshift/microshift/blob/main/docs/contributor/storage/configuration.md
 [[customizations.files]]
 path = "/etc/microshift/lvmd.yaml"
 mode = "0755"
-data = '''
+data = """
 # Unix domain socket endpoint of gRPC
 socket-name: /run/lvmd/lvmd.socket
 device-classes:
@@ -83,8 +84,7 @@ device-classes:
     # Storage capacity in GiB to be spared
     spare-gb: 100
     # A flag to indicate that this device-class is used by default
-    default: true
-'''
+    default: true"""
 
 # Install ArgoCD
 [[customizations.directories]]
@@ -93,26 +93,24 @@ path = "/etc/microshift/manifests.d/argocd"
 [[customizations.files]]
 path = "/etc/microshift/manifests.d/argocd/namespace.yaml"
 mode = "0755"
-data = '''
+data = """
 apiVersion: v1
 kind: Namespace
 metadata:
   name: argocd
   labels:
-    name: argocd
-'''
+    name: argocd"""
 
 [[customizations.files]]
 path = "/etc/microshift/manifests.d/argocd/kustomization.yaml"
 mode = "0755"
-data = '''
+data = """
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: argocd
 resources:
 - namespace.yaml
-- https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-'''
+- https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml"""
 
 # Custom Greenboot health checks for core microshift 
 # https://docs.redhat.com/en/documentation/red_hat_build_of_microshift/4.16/html/running_applications/microshift-greenboot-workload-scripts#microshift-greenboot-app-health-check-ex-reqs_microshift-greenboot-workload-scripts
@@ -124,7 +122,7 @@ path = "/etc/greenboot/check/required.d/greenboot-logger.sh"
 mode = "0755"
 user = "root"
 group = "root"
-data = '''
+data = """
     #!/bin/bash
     # /usr/local/bin/greenboot-logger.sh
     LOGFILE="/var/log/greenboot-checks.log"
@@ -144,14 +142,14 @@ data = '''
     # log "Info" "This is an informational message."
     # log "Warning" "This is a warning message."
     # log "Error" "This is an error message."
-'''
+"""
 
 [[customizations.files]]
 path = "/etc/greenboot/check/required.d/40_microshift_running_check.sh"
 mode = "0755"
 user = "root"
 group = "root"
-data = '''
+data = """
 #!/bin/bash
 set -e
 
@@ -283,4 +281,4 @@ function is_microshift_healthy() {
     [ "${check_lv}" != "livez check passed"  ] && return 1
     return 0
 }
-'''
+"""
