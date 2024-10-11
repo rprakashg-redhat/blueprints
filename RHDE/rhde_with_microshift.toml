@@ -63,8 +63,7 @@ disabled = ["telnet"]
 [[customizations.files]]
 path = "/etc/systemd/journald.conf.d/microshift.conf"
 mode = "0755"
-data = """
-[Journal]
+data = """[Journal]
 Storage=persistent
 SystemMaxUse=1G
 RuntimeMaxUse=1G"""
@@ -73,8 +72,7 @@ RuntimeMaxUse=1G"""
 [[customizations.files]]
 path = "/etc/microshift/lvmd.yaml"
 mode = "0755"
-data = """
-# Unix domain socket endpoint of gRPC
+data = """# Unix domain socket endpoint of gRPC
 socket-name: /run/lvmd/lvmd.socket
 device-classes:
   # The name of a device-class
@@ -93,8 +91,7 @@ path = "/etc/microshift/manifests.d/argocd"
 [[customizations.files]]
 path = "/etc/microshift/manifests.d/argocd/namespace.yaml"
 mode = "0755"
-data = """
-apiVersion: v1
+data = """apiVersion: v1
 kind: Namespace
 metadata:
   name: argocd
@@ -104,8 +101,7 @@ metadata:
 [[customizations.files]]
 path = "/etc/microshift/manifests.d/argocd/kustomization.yaml"
 mode = "0755"
-data = """
-apiVersion: kustomize.config.k8s.io/v1beta1
+data = """apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: argocd
 resources:
@@ -123,25 +119,25 @@ mode = "0755"
 user = "root"
 group = "root"
 data = """
-    #!/bin/bash
-    # /usr/local/bin/greenboot-logger.sh
-    LOGFILE="/var/log/greenboot-checks.log"
+#!/bin/bash
+# /usr/local/bin/greenboot-logger.sh
+LOGFILE="/var/log/greenboot-checks.log"
 
-    log() {
-        local level="$1"
-        local message="$2"
+log() {
+    local level="$1"
+    local message="$2"
 
-        # Log to system journal
-        logger -t greenboot-checks -p "user.${level}" "${message}"
+    # Log to system journal
+    logger -t greenboot-checks -p "user.${level}" "${message}"
 
-        # Log to file
-        echo "$(date '+%Y-%m-%d %H:%M:%S') [${level}] ${message}" >> "${LOGFILE}"
-    }
+    # Log to file
+    echo "$(date '+%Y-%m-%d %H:%M:%S') [${level}] ${message}" >> "${LOGFILE}"
+}
 
-    # Example usage:
-    # log "Info" "This is an informational message."
-    # log "Warning" "This is a warning message."
-    # log "Error" "This is an error message."
+# Example usage:
+# log "Info" "This is an informational message."
+# log "Warning" "This is a warning message."
+# log "Error" "This is an error message."
 """
 
 [[customizations.files]]
@@ -280,5 +276,4 @@ function is_microshift_healthy() {
     [ "${check_rd}" != "readyz check passed" ] && return 1
     [ "${check_lv}" != "livez check passed"  ] && return 1
     return 0
-}
-"""
+}"""
