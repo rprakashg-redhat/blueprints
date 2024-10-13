@@ -10,11 +10,6 @@ distro          = "rhel-94"
 name = "cockpit"
 version = "*"
 
-# cockpit ui for managing virtualmachines
-[[packages]]
-name = "cockpit-machines"
-version = "*"
-
 # cockpit ui for rpm-ostree 
 [[packages]]
 name = "cockpit-ostree"
