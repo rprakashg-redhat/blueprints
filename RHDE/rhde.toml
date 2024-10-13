@@ -1,16 +1,66 @@
 name            = "rhde"
 description     = "Base Red Hat Device Edge 9.4"
-version         = "1.1.0"
-modules = []
-groups = []
+version         = "1.3.0"
+modules         = []
+groups          = []
 distro          = "rhel-94"
 
+# web console
 [[packages]]
-name = "strace"
+name = "cockpit"
+version = "*"
+
+# cockpit ui for managing virtualmachines
+[[packages]]
+name = "cockpit-machines"
+version = "*"
+
+# cockpit ui for rpm-ostree 
+[[packages]]
+name = "cockpit-ostree"
+version = "*"
+
+# cockpit component for podman containers
+[[packages]]
+name = "cockpit-podman"
+version = "*"
+
+[[packages]]
+name = "greenboot"
+version = "*"
+
+[[packages]]
+name = "greenboot-grub2"
+version = "*"
+
+[[packages]]
+name = "greenboot-default-health-checks"
+version = "*"
+
+# System logging service to capture logs from MicroShift and other system services. 
+[[packages]]
+name = "rsyslog"
+version = "*"
+
+# Provides essential system utilities.
+[[packages]]
+name = "util-linux"
+version = "*"
+
+# Utilities for working with the ext2/3/4 filesystems
+[[packages]]
+name = "e2fsprogs"
 version = "*"
 
 [customizations.services]
-enabled = ["rpm-ostreed-automatic.timer", "podman-auto-update.timer", "applyupdate.timer"]
+enabled = ["cockpit.socket", "podman", "firewalld", "rpm-ostreed-automatic.timer", "podman-auto-update.timer", "applyupdate.timer"]
+
+[customizations.firewall]
+ports = ["8080:tcp", "9090:tcp"]
+
+[customizations.firewall.services]
+enabled = ["http", "https", "ssh", "cockpit"]
+disabled = ["telnet"]
 
 [[customizations.directories]]
 path = "/etc/systemd/system/podman-auto-update.timer.d"
