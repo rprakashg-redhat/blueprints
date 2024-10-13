@@ -1,6 +1,6 @@
 name            = "rhde"
 description     = "Base Red Hat Device Edge 9.4"
-version         = "1.3.0"
+version         = "1.0.0"
 modules         = []
 groups          = []
 distro          = "rhel-94"

@@ -1,8 +1,8 @@
 name            = "rhde_with_microshift"
 description     = "Red Hat Device Edge 9.4 with Microshift 4.16"
 version         = "1.0.0"
-modules = []
-groups = []
+modules         = []
+groups          = []
 distro          = "rhel-94"
 
 # web console
@@ -84,10 +84,10 @@ name = "lvm2"
 version = "*"
 
 [customizations.services]
-enabled = ["microshift", "cockpit.socket", "podman", "chronyd", "rsyslog", "firewalld"]
+enabled = ["microshift", "cockpit.socket", "podman", "chronyd", "rsyslog", "firewalld", "rpm-ostreed-automatic.timer", "podman-auto-update.timer", "applyupdate.timer"]
 
 [customizations.firewall]
-ports = ["8081:tcp", "8089:tcp", "8096:tcp", "8443:tcp", "8480:tcp", "9091:tcp", "9099:tcp", "9090:tcp"]
+ports = ["8080:tcp", "9090:tcp", "8081:tcp", "8089:tcp", "8096:tcp", "8443:tcp", "8480:tcp", "9091:tcp", "9099:tcp"]
 
 [customizations.firewall.services]
 enabled = ["http", "https", "ssh", "cockpit", "kube-apiserver", "kube-nodeport-services", "dhcpv6-client"]
@@ -108,6 +108,8 @@ path = "/etc/microshift"
 
 [[customizations.directories]]
 path = "/etc/microshift/manifests.d/argocd"
+# *****************************************************
+# File customizations
 # *****************************************************
 [[customizations.files]]
 path = "/etc/systemd/system/podman-auto-update.timer.d/splay.conf"
@@ -142,7 +144,6 @@ OnCalendar=Sun *-*-* 00:00:00
 [Install]
 WantedBy=multi-user.target"""
 
-# File customizations
 # Customize journald microshift configuration
 [[customizations.files]]
 path = "/etc/systemd/journald.conf.d/microshift.conf"
