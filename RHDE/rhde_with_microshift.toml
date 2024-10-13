@@ -59,7 +59,7 @@ name = "lvm2"
 version = "*"
 
 [customizations.services]
-enabled = ["microshift", "cockpit.socket", "podman.socket", "chronyd", "rsyslog", "firewalld", "rpm-ostreed-automatic.timer", "podman-auto-update.timer", "applyupdate.timer"]
+enabled = ["microshift", "cockpit.socket", "podman.socket", "podman.service", "firewalld", "rpm-ostreed-automatic.timer", "podman-auto-update.timer", "applyupdate.timer"]
 
 [customizations.firewall]
 ports = ["8080:tcp", "9090:tcp", "8081:tcp", "8089:tcp", "8096:tcp", "8443:tcp", "8480:tcp", "9091:tcp", "9099:tcp"]
