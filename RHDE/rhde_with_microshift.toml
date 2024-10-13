@@ -10,11 +10,6 @@ distro          = "rhel-94"
 name = "cockpit"
 version = "*"
 
-# cockpit ui for managing virtualmachines
-[[packages]]
-name = "cockpit-machines"
-version = "*"
-
 # cockpit ui for rpm-ostree 
 [[packages]]
 name = "cockpit-ostree"
@@ -56,26 +51,6 @@ version = "*"
 
 [[packages]]
 name = "microshift-selinux"
-version = "*"
-
-#  A time synchronization service, crucial for distributed systems like Kubernetes.
-[[packages]]
-name = "chrony"
-version = "*"
-
-# System logging service to capture logs from MicroShift and other system services. 
-[[packages]]
-name = "rsyslog"
-version = "*"
-
-# Provides essential system utilities.
-[[packages]]
-name = "util-linux"
-version = "*"
-
-# Utilities for working with the ext2/3/4 filesystems
-[[packages]]
-name = "e2fsprogs"
 version = "*"
 
 # Tools for managing Logical Volume Manager (LVM), useful if using LVM storage.
