@@ -1,2 +1,2 @@
 # blueprints
-Image builder blueprint definition files
+This repository contains image builder blueprint definition files
