@@ -1,7 +1,7 @@
 ---
 builder_blueprint_name: rhde
 builder_blueprint_description: "Base Red Hat Device Edge 9.4 blueprint"
-builder_compose_type: edge-commit
+builder_blueprint_distro: "rhel-94"
 builder_compose_pkgs:
 - cockpit
 - cockpit-ostree
